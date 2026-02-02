@@ -32,6 +32,7 @@ export class Login implements OnInit {
 
       this.authService.login(payload).subscribe(resp => {
         console.log('Login response (full):', resp);
+        console.log();
         const body = resp?.body ?? resp;
         this.authService.saveToken(body.token);
         this.authService.setRole(body.role);
