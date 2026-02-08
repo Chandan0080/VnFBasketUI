@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, signal } from "@angular/core";
 import { Observable } from "rxjs";
 
 @Injectable({
@@ -7,7 +7,7 @@ import { Observable } from "rxjs";
 })
 export class AuthService {
      private token: string | null = null;
-     private isLoggedIn: boolean = false;
+     private isLoggedIn = signal(false);
 
      constructor(private http: HttpClient){}
 
@@ -15,16 +15,19 @@ export class AuthService {
 
      login(details: any): Observable<any> {
       // const headers = { 'Content-Type': 'application/json' };
+
         return this.http.post(this.apiUrl+ '/user/login', details);
      }
 
      register(details: any): Observable<any> {
+         
         return this.http.post(this.apiUrl + '/register', details);
+
      }
 
      saveToken(token: string): void {
         this.token = token;
-        this.isLoggedIn = true;
+        this.isLoggedIn.set(true);
         // Optionally, save the token to localStorage or cookies for persistence
         localStorage.setItem('token', token);
      }
@@ -54,6 +57,7 @@ export class AuthService {
      }
 
      get LoginStatus(): boolean {
+         
         return !!localStorage.getItem('token');
      }
 
@@ -68,7 +72,7 @@ export class AuthService {
         localStorage.removeItem('userId');
         localStorage.removeItem('email');
         this.token = null;
-        this.isLoggedIn = false;
+        this.isLoggedIn.set(false);
      }
 
      checkEmailExists(email: string): Observable<boolean> {

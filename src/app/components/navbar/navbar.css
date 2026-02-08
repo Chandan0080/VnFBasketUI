@@ -1,0 +1,27 @@
+
+
+.navbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+
+.nav-link.btn-link {
+  padding: 0 !important;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.nav-link.btn-link:hover {
+  color: #dc3545 !important;
+}
+
+.nav-link.btn-link:focus {
+  box-shadow: none;
+}
