@@ -8,19 +8,24 @@
   box-sizing: border-box;
 }
 
-html, body {
+html {
   height: 100%;
-  margin: 0;
+  font-size: clamp(14px, 2vw, 18px);
+  scroll-behavior: smooth;
 }
 
 body {
+  height: 100%;
+  margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #F9FAFB;
   color: #1F2937;
+  overflow: auto;
 }
 
 app-root {
   display: block;
+  height: 100%;
 }
 
 /* Input & Form Styling */
@@ -94,24 +99,6 @@ label {
   color: #1F2937;
   margin-bottom: 8px;
   font-size: 0.95rem;
-}
-
-/* Navbar Enhancements */
-.navbar {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.navbar-brand {
-  transition: all 0.3s ease;
-}
-
-.nav-link {
-  transition: all 0.3s ease;
-  font-weight: 500;
-}
-
-.nav-link:hover {
-  opacity: 0.8;
 }
 
 /* Spinner Styling */

@@ -1,74 +1,98 @@
-<div style="background: linear-gradient(135deg, #12B981 0%, #059669 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center;">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-5">
-        <div class="card" style="border: none; border-radius: 16px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15); overflow: hidden;">
-          <div style="background: linear-gradient(135deg, #12B981 0%, #10B981 100%); padding: 40px 20px; text-align: center; color: white;">
-            <div style="font-size: 3rem; margin-bottom: 16px;">
-              <i class="fas fa-shopping-basket"></i>
-            </div>
-            <h2 class="mb-0" style="font-size: 2rem; font-weight: 700;">Welcome Back</h2>
-            <p style="margin-top: 8px; opacity: 0.9;">Sign in to continue shopping</p>
-          </div>
-          <div class="card-body p-5">
-          <form [formGroup]="loginForm" (ngSubmit)="login()">
-            <!-- Email Field -->
-            <div class="mb-4">
-              <label for="email" class="form-label fw-600" style="color: #1F2937; margin-bottom: 8px; font-size: 0.95rem;">Email Address</label>
-              <input
-                type="email"
-                class="form-control"
-                id="email"
-                formControlName="email"
-                placeholder="you@example.com"
-                [class.is-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
-                style="border-radius: 8px; border: 2px solid #E5E7EB; padding: 12px 16px; font-size: 1rem; transition: all 0.3s;"
-              />
-              <div class="invalid-feedback" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-                <span *ngIf="loginForm.get('email')?.hasError('required')">Email is required.</span>
-                <span *ngIf="loginForm.get('email')?.hasError('email')">Please enter a valid email address.</span>
-              </div>
-            </div>
-
-            <!-- Password Field -->
-            <div class="mb-4">
-              <label for="password" class="form-label fw-600" style="color: #1F2937; margin-bottom: 8px; font-size: 0.95rem;">Password</label>
-              <input
-                type="password"
-                class="form-control"
-                id="password"
-                formControlName="password"
-                placeholder="Enter your password"
-                [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
-                style="border-radius: 8px; border: 2px solid #E5E7EB; padding: 12px 16px; font-size: 1rem; transition: all 0.3s;"
-              />
-              <div class="invalid-feedback" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-                <span *ngIf="loginForm.get('password')?.hasError('required')">Password is required.</span>
-                <span *ngIf="loginForm.get('password')?.hasError('pattern')">Password format is incorrect.</span>
-              </div>
-            </div>
-
-            <!-- Submit Button -->
-            <div class="d-grid gap-2 mt-6">
-              <button
-                type="submit"
-                class="btn btn-lg fw-600"
-                [disabled]="loginForm.invalid"
-                style="background: linear-gradient(135deg, #12B981 0%, #059669 100%); color: white; border: none; border-radius: 8px; padding: 14px; font-size: 1.05rem; transition: all 0.3s; box-shadow: 0 4px 12px rgba(18, 185, 129, 0.3);"
-              >
-                <i class="fas fa-sign-in-alt me-2"></i> Login to Your Account
-              </button>
-            </div>
-
-            <!-- Register Link -->
-            <div class="text-center mt-4" style="border-top: 1px solid #E5E7EB; padding-top: 20px;">
-              <p class="mb-0" style="color: #6B7280;">
-                Don't have an account? <a href="/registration" class="text-decoration-none fw-600" style="color: #12B981; transition: all 0.3s;">Create one now</a>
-              </p>
-            </div>
-          </form>
+<div class="login-container">
+  <div class="left-section">
+    <div class="branding-content">
+      <div class="brand-logo">
+        <i class="fas fa-shopping-basket"></i>
+      </div>
+      <h1 class="brand-title">V&F Basket</h1>
+      <p class="brand-tagline">Your Perfect Shopping Destination</p>
+      
+      <div class="features-section">
+        <div class="feature">
+          <i class="fas fa-truck"></i>
+          <h4>Fast Delivery</h4>
+          <p>Quick and reliable shipping to your doorstep</p>
+        </div>
+        <div class="feature">
+          <i class="fas fa-lock"></i>
+          <h4>Secure Payment</h4>
+          <p>Safe and encrypted transactions</p>
+        </div>
+        <div class="feature">
+          <i class="fas fa-undo"></i>
+          <h4>Easy Returns</h4>
+          <p>Hassle-free return policy</p>
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="right-section">
+    <mat-card class="login-card">
+      <mat-card-header>
+        <mat-card-title>Welcome Back!</mat-card-title>
+        <mat-card-subtitle>Sign in to your account</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <!-- Error Message -->
+        <div class="error-message" *ngIf="errorMsg">
+          <mat-icon>error_outline</mat-icon>
+          <span>{{ errorMsg }}</span>
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
+          <!-- Email Field -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email Address</mat-label>
+            <input matInput
+              type="email"
+              formControlName="email"
+              placeholder="you@example.com">
+            <mat-icon matPrefix>email</mat-icon>
+            <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+              Email is required
+            </mat-error>
+            <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+              Please enter a valid email
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Password Field -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Password</mat-label>
+            <input matInput
+              type="password"
+              formControlName="password"
+              placeholder="Enter your password">
+            <mat-icon matPrefix>lock</mat-icon>
+            <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+              Password is required
+            </mat-error>
+            <mat-error *ngIf="loginForm.get('password')?.hasError('pattern')">
+              Password must contain uppercase, lowercase, number & special character
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Login Button -->
+          <button mat-raised-button
+            color="primary"
+            class="login-btn"
+            type="submit"
+            [disabled]="loginForm.invalid">
+            <mat-icon>login</mat-icon>
+            Sign In
+          </button>
+
+          <mat-divider class="my-4"></mat-divider>
+
+          <!-- Forgot Password & Signup -->
+          <div class="footer-links">
+            <a href="#" class="link">Forgot Password?</a>
+            <a href="/registration" class="link">Create Account</a>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
   </div>
 </div>
