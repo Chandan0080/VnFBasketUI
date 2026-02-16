@@ -2,10 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth-service.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    MatDividerModule
+  ],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -32,6 +47,7 @@ export class Login implements OnInit {
 
       this.authService.login(payload).subscribe(resp => {
         console.log('Login response (full):', resp);
+        console.log();
         const body = resp?.body ?? resp;
         this.authService.saveToken(body.token);
         this.authService.setRole(body.role);

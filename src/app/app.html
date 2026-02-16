@@ -1,52 +1,5 @@
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * Delete the template below * * * * * * * * * -->
-<!-- * * * * * * * to get started with your project! * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
 <div class="app-container">
-  <nav class="navbar navbar-expand-lg navbar-light" style="background: linear-gradient(135deg, #12B981 0%, #10B981 100%); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
-    <div class="container-fluid">
-      <a class="navbar-brand fw-bold" href="/" style="font-size: 1.8rem; color: white;">
-        <span style="background: white; color: #12B981; padding: 4px 12px; border-radius: 6px; font-weight: 700;">V&F</span>
-        <span style="color: white; margin-left: 8px;">Basket</span>
-      </a>
-      
-      <!-- Search Bar -->
-      <div class="input-group" style="width: 400px; margin: 0 auto;">
-        <input type="text" class="form-control" placeholder="Search for products..." style="border-radius: 8px 0 0 8px; border: none; padding: 12px;">
-        <button class="btn" style="background-color: #FB923C; border: none; border-radius: 0 8px 8px 0; color: white;" type="button">
-          <i class="fas fa-search"></i>
-        </button>
-      </div>
-      
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="border: none;">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto" style="gap: 10px;">
-          <li class="nav-item">
-            <a class="nav-link fw-500" href="/login" style="color: white; display: flex; align-items: center; gap: 6px;">
-              <i class="fas fa-sign-in-alt"></i> Login
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link fw-500" href="/registration" style="color: white; display: flex; align-items: center; gap: 6px;">
-              <i class="fas fa-user-plus"></i> Register
-            </a>
-          </li>
-          <li class="nav-item">
-            <button class="nav-link btn btn-link fw-500" (click)="logout()" style="color: white; border: none; text-decoration: none; display: flex; align-items: center; gap: 6px;">
-              <i class="fas fa-sign-out-alt"></i> Logout
-            </button>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+  <app-navbar></app-navbar>
 
   <main class="main-content">
     <router-outlet></router-outlet>
