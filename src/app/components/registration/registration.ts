@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth-service.service';
 import { map } from 'rxjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,6 +16,7 @@ import { MatDividerModule } from '@angular/material/divider';
   imports: [
     ReactiveFormsModule,
     CommonModule,
+    RouterLink,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
@@ -29,7 +30,6 @@ import { MatDividerModule } from '@angular/material/divider';
 export class Registration implements OnInit {
   registrationForm:FormGroup;
   usernameExists=false;
-  
   
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.registrationForm = this.fb.group({
@@ -67,8 +67,8 @@ export class Registration implements OnInit {
       this.authService.register(userObject).subscribe(
         response => {
           console.log('Registration successful', response);
-            this.router.navigate(['/login']);
-          },(error:any) => {
+          this.router.navigate(['/login']);
+        },(error:any) => {
           console.error('Registration failed', error);
         });
     }

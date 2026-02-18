@@ -8,22 +8,21 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatDialogContainer } from "@angular/material/dialog";
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   imports: [
     ReactiveFormsModule,
     CommonModule,
+    RouterLink,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
     MatDividerModule,
-
-],
+  ],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -40,6 +39,10 @@ export class Login implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  switchToRegistration(): void {
+    this.router.navigate(['/registration']);
   }
 
   login(){

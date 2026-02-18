@@ -7,10 +7,13 @@
     <input type="text" placeholder="Search for Products..." />
   </div>
 
-  <!-- Login Button -->
+  <!-- Login & Cart -->
   @if (!isLoggedIn) {
-    <div class="auth">
-      <button (click)="openLoginModal()">Login / Sign Up</button>
+    <div class="auth-section">
+      <button routerLink="/login" class="login-btn">Login / Sign Up</button>
+      <div class="icon cart" routerLink="/login" title="Shopping Cart">
+        <span class="material-icons">shopping_basket</span>
+      </div>
     </div>
   } @else {
     <div class="auth">
@@ -24,7 +27,7 @@
       </div>
 
       <!-- Cart Icon -->
-      <div class="icon cart" routerLink="/cart">
+      <div class="icon cart" routerLink="/cart" title="Shopping Cart">
         <span class="material-icons">shopping_basket</span>
       </div>
     </div>

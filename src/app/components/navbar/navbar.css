@@ -21,8 +21,8 @@
 
 /* Search */
 .search-box {
-  flex: 1;
-  margin: 0 40px;
+  flex: 0 1 350px;
+  margin: 0 20px;
 }
 
 .search-box input {
@@ -32,7 +32,34 @@
   border: 1px solid #ccc;
 }
 
-/* Login */
+/* Login & Auth Section */
+.auth-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.login-btn {
+  background-color: #202020;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: #333;
+}
+
+/* Auth button (logged in state) */
+.auth {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
 .auth button {
   background-color: #202020;
   color: white;
@@ -40,6 +67,36 @@
   padding: 10px 18px;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.auth button:hover {
+  background-color: #333;
+}
+
+/* Icons */
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.icon {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  background-color: #84c225;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  color: black;
+  font-size: 20px;
+}
+
+.icon:hover {
+  background-color: #6fa818;
+  transform: scale(1.05);
 }
 
 /* Category Bar */

@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth-service.service';
-import { MatDialog } from '@angular/material/dialog';
-import { Login } from '../login/login';
 
 @Component({
   selector: 'app-navbar',
@@ -15,7 +13,7 @@ export class Navbar {
 
   isLoggedIn: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router, private dialog: MatDialog) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     // 🔥 Subscribe to login state
@@ -25,16 +23,8 @@ export class Navbar {
     console.log('Navbar initialized. Current login status:', this.isLoggedIn);
   }
 
-    openLoginModal(): void {
-    this.dialog.open(Login, {
-      width: '500px',
-      disableClose: false, // click outside to close
-      panelClass: 'custom-dialog'
-    });
-  }
 
   logout() {
     this.authService.logout();
-    this.router.navigate(['/login']);
   }
 }
