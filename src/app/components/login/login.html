@@ -1,98 +1,63 @@
-<div class="login-container">
-  <div class="left-section">
-    <div class="branding-content">
-      <div class="brand-logo">
-        <i class="fas fa-shopping-basket"></i>
-      </div>
-      <h1 class="brand-title">V&F Basket</h1>
-      <p class="brand-tagline">Your Perfect Shopping Destination</p>
-      
-      <div class="features-section">
-        <div class="feature">
-          <i class="fas fa-truck"></i>
-          <h4>Fast Delivery</h4>
-          <p>Quick and reliable shipping to your doorstep</p>
+<div class="right-section">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title>Welcome Back!</mat-card-title>
+      <mat-card-subtitle>Sign in to your account</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
+        <!-- Email Field -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email Address</mat-label>
+          <input matInput type="email" formControlName="email" placeholder="you@example.com" />
+          <mat-icon matPrefix>email</mat-icon>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+            Email is required
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+            Please enter a valid email
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Password Field -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="password"
+            placeholder="Enter your password"
+          />
+          <mat-icon matPrefix>lock</mat-icon>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+            Password is required
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('pattern')">
+            Password must contain uppercase, lowercase, number & special character
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Login Button -->
+        <button
+          mat-raised-button
+          color="primary"
+          class="login-btn"
+          type="submit"
+          [disabled]="loginForm.invalid"
+        >
+          <mat-icon>login</mat-icon>
+          Sign In
+        </button>
+
+        <mat-divider class="my-4"></mat-divider>
+
+        <!-- Forgot Password & Signup -->
+        <div class="footer-links">
+          <a href="#" class="link">Forgot Password?</a>
+          <a href="/registration" class="link">Create Account</a>
         </div>
-        <div class="feature">
-          <i class="fas fa-lock"></i>
-          <h4>Secure Payment</h4>
-          <p>Safe and encrypted transactions</p>
-        </div>
-        <div class="feature">
-          <i class="fas fa-undo"></i>
-          <h4>Easy Returns</h4>
-          <p>Hassle-free return policy</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="right-section">
-    <mat-card class="login-card">
-      <mat-card-header>
-        <mat-card-title>Welcome Back!</mat-card-title>
-        <mat-card-subtitle>Sign in to your account</mat-card-subtitle>
-      </mat-card-header>
-
-      <mat-card-content>
-        <!-- Error Message -->
-        <div class="error-message" *ngIf="errorMsg">
-          <mat-icon>error_outline</mat-icon>
-          <span>{{ errorMsg }}</span>
-        </div>
-
-        <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
-          <!-- Email Field -->
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Email Address</mat-label>
-            <input matInput
-              type="email"
-              formControlName="email"
-              placeholder="you@example.com">
-            <mat-icon matPrefix>email</mat-icon>
-            <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
-              Email is required
-            </mat-error>
-            <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
-              Please enter a valid email
-            </mat-error>
-          </mat-form-field>
-
-          <!-- Password Field -->
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Password</mat-label>
-            <input matInput
-              type="password"
-              formControlName="password"
-              placeholder="Enter your password">
-            <mat-icon matPrefix>lock</mat-icon>
-            <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
-              Password is required
-            </mat-error>
-            <mat-error *ngIf="loginForm.get('password')?.hasError('pattern')">
-              Password must contain uppercase, lowercase, number & special character
-            </mat-error>
-          </mat-form-field>
-
-          <!-- Login Button -->
-          <button mat-raised-button
-            color="primary"
-            class="login-btn"
-            type="submit"
-            [disabled]="loginForm.invalid">
-            <mat-icon>login</mat-icon>
-            Sign In
-          </button>
-
-          <mat-divider class="my-4"></mat-divider>
-
-          <!-- Forgot Password & Signup -->
-          <div class="footer-links">
-            <a href="#" class="link">Forgot Password?</a>
-            <a href="/registration" class="link">Create Account</a>
-          </div>
-        </form>
-      </mat-card-content>
-    </mat-card>
-  </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>
