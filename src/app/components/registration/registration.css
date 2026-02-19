@@ -1,238 +1,82 @@
 .registration-container {
-  display: flex;
-  height: auto;
-  background: #f5f5f5;
-  padding: 0;
-  margin: 0;
-  gap: clamp(1rem, 3vw, 2rem);
+  width: 100%;
+  background-color: #ffffff;
+  padding: 40px 20px;
+  min-height: calc(100vh - 200px);
 }
 
-.left-section {
-  flex: 1;
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  padding: 60px 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  position: relative;
-  overflow: hidden;
-  box-shadow: inset -5px 0 15px rgba(0, 0, 0, 0.1);
+.registration-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-.left-section::before {
-  content: '';
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  background: rgba(255, 255, 255, 0.12);
-  border-radius: 50%;
-  top: -200px;
-  left: -200px;
-  animation: float 7s ease-in-out infinite;
-}
-
-.left-section::after {
-  content: '';
-  position: absolute;
-  width: 350px;
-  height: 350px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 50%;
-  bottom: -100px;
-  right: -100px;
-  animation: float 9s ease-in-out infinite reverse;
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-15px);
-  }
-}
-
-.benefits-content {
-  position: relative;
-  z-index: 1;
+.registration-header {
   text-align: center;
-  max-width: 380px;
+  margin-bottom: 40px;
 }
 
-.benefits-logo {
-  font-size: 70px;
-  margin-bottom: 30px;
-  text-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-}
-
-.benefits-title {
-  font-size: 2.3rem;
+.registration-header h1 {
+  font-size: 2.5rem;
+  color: #84c225;
   font-weight: 700;
   margin-bottom: 10px;
-  letter-spacing: -1px;
 }
 
-.benefits-tagline {
+.registration-header p {
   font-size: 1.05rem;
-  opacity: 0.9;
-  margin-bottom: 50px;
-}
-
-.benefits-list {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
-.benefit {
-  text-align: left;
-  transition: all 0.3s ease;
-  padding: 0 0 0 0;
-}
-
-.benefit:hover {
-  transform: translateX(8px);
-  opacity: 1;
-}
-
-.benefit i {
-  font-size: 2rem;
-  display: block;
-  margin-bottom: 12px;
-  transition: all 0.3s ease;
-  animation: pulse-green 2s ease-in-out infinite;
-}
-
-.benefit:hover i {
-  transform: scale(1.1);
-  animation: none;
-}
-
-@keyframes pulse-green {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.85;
-  }
-}
-
-.benefit h4 {
+  color: #333;
   margin: 0;
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-
-.benefit p {
-  margin: 6px 0 0 0;
-  opacity: 0.85;
-  font-size: 0.95rem;
-}
-
-.right-section {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
-}
-
-.registration-card {
-  width: 100%;
-  max-width: clamp(320px, 90vw, 420px);
-  border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(16, 185, 129, 0.1);
-  border: none;
-  transition: all 0.3s ease;
-  background: white;
-}
-
-.registration-card:hover {
-  box-shadow: 0 20px 60px rgba(16, 185, 129, 0.15), 0 0 0 1px rgba(16, 185, 129, 0.2);
-  transform: translateY(-4px);
-}
-
-::ng-deep .registration-card .mat-card-header {
-  padding: clamp(1.5rem, 3vw, 24px) clamp(1.5rem, 3vw, 24px) clamp(1rem, 2vw, 16px) clamp(1.5rem, 3vw, 24px);
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(5, 150, 105, 0.08) 100%);
-  border-bottom: 1px solid #e5e7eb;
-  margin: 0;
-}
-
-::ng-deep .registration-card .mat-card-title {
-  font-size: clamp(1.3rem, 3vw, 1.6rem);
-  font-weight: 600;
-  color: #1f2937;
-  margin-bottom: 4px;
-}
-
-::ng-deep .registration-card .mat-card-subtitle {
-  font-size: clamp(0.8rem, 1.5vw, 0.9rem);
-  color: #6b7280;
-}
-
-::ng-deep .mat-card-content {
-  padding: clamp(1.5rem, 3vw, 24px);
 }
 
 .registration-form {
   display: flex;
   flex-direction: column;
-  gap: clamp(0.75rem, 1.5vw, 16px);
-  padding-right: clamp(0.25rem, 1vw, 0.5rem);
+  gap: 20px;
 }
 
 .full-width {
   width: 100%;
 }
 
+/* Material Form Field Styling */
 ::ng-deep .mat-mdc-form-field-appearance-outline .mdc-text-field--focused .mdc-notched-outline .mdc-notched-outline__leading,
 ::ng-deep .mat-mdc-form-field-appearance-outline .mdc-text-field--focused .mdc-notched-outline .mdc-notched-outline__notch,
 ::ng-deep .mat-mdc-form-field-appearance-outline .mdc-text-field--focused .mdc-notched-outline .mdc-notched-outline__trailing {
-  border-color: #10b981 !important;
-  transition: border-color 0.3s ease;
+  border-color: #84c225 !important;
 }
 
-::ng-deep .mat-mdc-form-field-appearance-outline.mat-focused .mat-mdc-form-field-focus-overlay {
-  background-color: rgba(16, 185, 129, 0.06);
-  transition: background-color 0.3s ease;
+::ng-deep .mat-mdc-form-field-appearance-outline.mat-focused .mdc-text-field--focused .mat-mdc-floating-label {
+  color: #84c225 !important;
 }
 
-::ng-deep .mat-mdc-form-field-appearance-outline .mdc-text-field--focused .mat-mdc-floating-label {
-  color: #10b981 !important;
+::ng-deep .mat-mdc-text-field-wrapper .mdc-text-field--outlined .mdc-text-field__input {
+  color: #333;
 }
 
-::ng-deep .mat-icon {
-  color: #9ca3af;
+::ng-deep .mat-mdc-form-field-appearance-outline .mdc-text-field--outlined label {
+  color: #84c225;
 }
 
-::ng-deep .mat-mdc-form-field-appearance-outline .mdc-text-field--focused .mat-icon {
-  color: #10b981;
+/* Icons in form fields */
+::ng-deep .mat-mdc-form-field .mat-mdc-prefix {
+  color: #84c225 !important;
 }
 
 .password-hint {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
-  padding: clamp(0.75rem, 1.5vw, 12px) clamp(0.75rem, 1.5vw, 14px);
-  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-  border-left: 4px solid #10b981;
-  border-radius: 6px;
-  font-size: clamp(0.75rem, 1.2vw, 0.85rem);
-  color: #15803d;
-  margin: clamp(-0.5rem, -1vw, -8px) 0 clamp(0.75rem, 1.5vw, 12px) 0;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(16, 185, 129, 0.2);
-}
-
-.password-hint:hover {
-  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
-  border-color: rgba(16, 185, 129, 0.4);
+  gap: 10px;
+  padding: 12px 14px;
+  background-color: #f0fdf4;
+  border-left: 4px solid #84c225;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: #333;
+  margin: -8px 0 12px 0;
 }
 
 .password-hint mat-icon {
-  color: #10b981 !important;
+  color: #84c225 !important;
   font-size: 18px;
   width: 18px;
   height: 18px;
@@ -241,38 +85,21 @@
 }
 
 .register-btn {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
-  color: white !important;
-  padding: clamp(0.75rem, 1.5vw, 12px) clamp(1rem, 2vw, 24px) !important;
-  font-size: clamp(0.9rem, 1.5vw, 1rem) !important;
+  background-color: #84c225 !important;
+  color: black !important;
+  padding: 12px 24px !important;
+  font-size: 1rem !important;
   height: auto !important;
   font-weight: 600 !important;
-  margin-top: clamp(0.5rem, 1vw, 12px);
+  margin-top: 12px;
   transition: all 0.3s ease !important;
-  position: relative;
-  overflow: hidden;
-  border-radius: 8px !important;
-}
-
-.register-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s;
+  border-radius: 4px !important;
 }
 
 .register-btn:hover:not(:disabled) {
-  box-shadow: 0 12px 28px rgba(16, 185, 129, 0.4);
-  transform: translateY(-3px);
-  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
-}
-
-.register-btn:hover:not(:disabled)::before {
-  left: 100%;
+  background-color: #6fa818 !important;
+  box-shadow: 0 4px 12px rgba(132, 194, 37, 0.3);
+  transform: translateY(-2px);
 }
 
 .register-btn:disabled {
@@ -281,13 +108,14 @@
 }
 
 .my-4 {
-  margin: clamp(0.5rem, 1vw, 12px) 0 !important;
+  margin: 16px 0 !important;
 }
 
 .footer-text {
   text-align: center;
-  color: #6b7280;
-  font-size: clamp(0.85rem, 1.5vw, 0.95rem);
+  color: #333;
+  font-size: 0.95rem;
+  margin-top: 20px;
 }
 
 .footer-text p {
@@ -295,10 +123,16 @@
 }
 
 .footer-text a {
-  color: #10b981;
+  color: #333;
   text-decoration: none;
   font-weight: 600;
-  transition: all 0.3s;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.footer-text a:hover {
+  color: #000;
+  text-decoration: underline;
 }
 
 .footer-text a:hover {

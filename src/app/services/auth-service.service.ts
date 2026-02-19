@@ -1,21 +1,30 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
      private token: string | null = null;
-     private isLoggedIn: boolean = false;
+   //   private isLoggedIn: boolean = false;
+   private isLoggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
+
+     // Observable that components will subscribe to
+   isLoggedIn$ = this.isLoggedInSubject.asObservable();
 
      constructor(private http: HttpClient){}
+
+   private hasToken(): boolean {
+    return !!sessionStorage.getItem('token');
+   }
 
      public apiUrl: string = 'http://localhost:8080/vnfbasket';
 
      login(details: any): Observable<any> {
       // const headers = { 'Content-Type': 'application/json' };
         return this.http.post(this.apiUrl+ '/user/login', details);
+        this.isLoggedInSubject.next(true);
      }
 
      register(details: any): Observable<any> {
@@ -24,51 +33,52 @@ export class AuthService {
 
      saveToken(token: string): void {
         this.token = token;
-        this.isLoggedIn = true;
-        // Optionally, save the token to localStorage or cookies for persistence
-        localStorage.setItem('token', token);
+        this.isLoggedInSubject.next(true);
+
+        // Optionally, save the token to sessionStorage or cookies for persistence
+        sessionStorage.setItem('token', token);
      }
 
      setRole(role: any){
-        localStorage.setItem('role', role);
+        sessionStorage.setItem('role', role);
      }
 
      get Role(){
-        return localStorage.getItem('role');
+        return sessionStorage.getItem('role');
      }
 
      setUserId(userId: any){
-        localStorage.setItem('userId', userId);
+        sessionStorage.setItem('userId', userId);
      }
 
      get UserId(){
-        return localStorage.getItem('userId');
+        return sessionStorage.getItem('userId');
      }
 
      setEmail(email: any){
-        localStorage.setItem('email', email);
+        sessionStorage.setItem('email', email);
      }
 
      get Email(){
-        return localStorage.getItem('email');
+        return sessionStorage.getItem('email');
      }
 
      get LoginStatus(): boolean {
-        return !!localStorage.getItem('token');
+        return !!sessionStorage.getItem('token');
      }
 
      get Token(): string | null {
-        this.token = localStorage.getItem('token');
+        this.token = sessionStorage.getItem('token');
         return this.token;
      }
 
      logout(){
-        localStorage.removeItem('token');
-        localStorage.removeItem('role');
-        localStorage.removeItem('userId');
-        localStorage.removeItem('email');
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('role');
+        sessionStorage.removeItem('userId');
+        sessionStorage.removeItem('email');
         this.token = null;
-        this.isLoggedIn = false;
+        this.isLoggedInSubject.next(false);
      }
 
      checkEmailExists(email: string): Observable<boolean> {

@@ -8,18 +8,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   imports: [
     ReactiveFormsModule,
     CommonModule,
+    RouterLink,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
-    MatDividerModule
+    MatDividerModule,
   ],
   templateUrl: './login.html',
   styleUrl: './login.css',
@@ -29,7 +31,7 @@ export class Login implements OnInit {
   loginForm:FormGroup;
   errorMsg:any;
 
-  constructor(private fb:FormBuilder, private authService:AuthService) { 
+  constructor(private fb:FormBuilder, private authService:AuthService, private router: Router) { 
     this.loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,16}$')]]
@@ -37,6 +39,10 @@ export class Login implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  switchToRegistration(): void {
+    this.router.navigate(['/registration']);
   }
 
   login(){
@@ -53,6 +59,7 @@ export class Login implements OnInit {
         this.authService.setRole(body.role);
         this.authService.setEmail(body.email);
         this.authService.setUserId(body.userId);
+        this.router.navigate(['/']);
       }, (error:any) => {
         console.error('Login failed', error);
         this.errorMsg = error.error?.message || error.error || 'Login failed';
