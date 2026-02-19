@@ -168,3 +168,9 @@
 .add-to-cart-btn:active {
   transform: translateY(0);
 }
+
+.name{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

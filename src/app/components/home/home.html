@@ -5,9 +5,16 @@
   </div>
 
   <div class="products-grid">
-    <app-product-card 
+
+    @for(items of products(); track items.productId){
+      <app-product-card 
+        [product]="items"
+      ></app-product-card>
+    }
+
+    <!-- <app-product-card 
       *ngFor="let product of products" 
       [product]="product"
-    ></app-product-card>
+    ></app-product-card> -->
   </div>
 </div>

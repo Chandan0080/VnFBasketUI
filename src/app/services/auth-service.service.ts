@@ -13,7 +13,7 @@ export class AuthService {
      // Observable that components will subscribe to
    isLoggedIn$ = this.isLoggedInSubject.asObservable();
 
-     constructor(private http: HttpClient){}
+   constructor(private http: HttpClient){}
 
    private hasToken(): boolean {
     return !!sessionStorage.getItem('token');
