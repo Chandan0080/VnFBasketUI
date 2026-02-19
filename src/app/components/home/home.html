@@ -1,1 +1,13 @@
-<p>home works!</p>
+<div class="home-container">
+  <div class="section-header">
+    <h2>Fresh Vegetables & Fruits</h2>
+    <p>Get your daily needs delivered fresh to your doorstep</p>
+  </div>
+
+  <div class="products-grid">
+    <app-product-card 
+      *ngFor="let product of products" 
+      [product]="product"
+    ></app-product-card>
+  </div>
+</div>

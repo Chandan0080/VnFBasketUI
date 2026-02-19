@@ -1,0 +1,38 @@
+<div class="product-card">
+  <div class="product-image-container">
+    <img [src]="product.image" [alt]="product.name" class="product-image" />
+    <div *ngIf="getDiscount() > 0" class="discount-badge">
+      {{ getDiscount() }}% OFF
+    </div>
+    <div *ngIf="product.isOrganic" class="organic-badge">
+      ORGANIC
+    </div>
+  </div>
+
+  <div class="product-details">
+    <p class="product-brand">{{ product.brand }}</p>
+    <p class="product-name">{{ product.name }}</p>
+
+    <div class="product-weights">
+      <span *ngFor="let weight of product.weights" class="weight-tag">
+        {{ weight }}
+      </span>
+    </div>
+
+    <div class="product-pricing">
+      <span class="current-price">₹{{ product.price }}</span>
+      <span *ngIf="product.originalPrice" class="original-price">
+        ₹{{ product.originalPrice }}
+      </span>
+    </div>
+
+    <div class="delivery-time">
+      <span class="delivery-icon">🚚</span>
+      <span>Delivery in {{ product.deliveryTime }} mins</span>
+    </div>
+
+    <button class="add-to-cart-btn" (click)="addToCart()">
+      Add to Cart
+    </button>
+  </div>
+</div>
