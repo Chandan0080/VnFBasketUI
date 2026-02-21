@@ -26,9 +26,13 @@
     </div>
 
     <div class="form-group">
-      <label>Image URL</label>
-      <input type="text" formControlName="imageUrl" placeholder="Paste image link" />
-    </div>
+  <label>Product Image</label>
+  <input 
+    type="file" 
+    accept="image/png, image/jpeg"
+    (change)="onFileSelected($event)" 
+  />
+</div>
 
     <div class="form-group">
       <label>Category</label>
