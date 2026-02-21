@@ -11,14 +11,12 @@ import { Product } from '../../models/product.model';
 })
 export class ProductCard {
   @Input() product!: Product;
+  
 
   addToCart() {
-    console.log('Added to cart:', this.product.name);
+    console.log('Added to cart:', this.product.productName);
     // Backend API call will be added here
   }
 
-  getDiscount(): number {
-    if (!this.product.originalPrice) return 0;
-    return Math.round(((this.product.originalPrice - this.product.price) / this.product.originalPrice) * 100);
-  }
+
 }

@@ -1,11 +1,9 @@
 export interface Product {    
-    id: number;
-    name: string;
-    brand: string;
-    image: string;
-    price: number;
-    originalPrice?: number;
-    isOrganic?: boolean;
-    deliveryTime: number;
-    weights: string[];
+    productId?: number;
+    productName?: string;
+    productDescription?: string;
+    imageUrl?: string;
+    productPrice?: number;
+    stockQuantity?: number;
+    categoryId?: number;
 }
