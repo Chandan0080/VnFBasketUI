@@ -21,6 +21,8 @@ import { MatOption } from '@angular/material/autocomplete';
 export class AddProduct {
   productForm!: FormGroup;
   categories  = signal<Category[]>([]);
+  selectedFile!: File;
+  imagePreview: string | ArrayBuffer | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -31,7 +33,6 @@ export class AddProduct {
       productName: ['', [Validators.required]],
       productPrice: [0, [Validators.required, Validators.min(0)]],
       categoryId: [0, [Validators.required]],
-      imageUrl: ['', [Validators.required]],
       productDescription: ['', [Validators.required]],
       stockQuantity: [0, [Validators.required, Validators.min(0)]],
     });
@@ -42,12 +43,34 @@ export class AddProduct {
   }
 
   saveProduct() {
-    if (this.productForm.valid) {
-      this.productService.addProducts(this.productForm.value).subscribe((response) => {
-        console.log('Product added successfully', response);
-        this.productForm.reset();
-      });
-    }
+    // if (this.productForm.valid) {
+    //   this.productService.addProducts(this.productForm.value).subscribe((response) => {
+    //     console.log('Product added successfully', response);
+    //     this.productForm.reset();
+    //   });
+    // }
+
+    if (this.productForm.valid && this.selectedFile) {
+
+    const formData = new FormData();
+
+    // Append product fields
+    formData.append('productName', this.productForm.get('productName')?.value);
+    formData.append('productPrice', this.productForm.get('productPrice')?.value);
+    formData.append('categoryId', this.productForm.get('categoryId')?.value);
+    formData.append('productDescription', this.productForm.get('productDescription')?.value);
+    formData.append('stockQuantity', this.productForm.get('stockQuantity')?.value);
+
+    // Append file
+    formData.append('productImage', this.selectedFile);
+
+    this.productService.addProducts(formData).subscribe(response => {
+      console.log('Product added successfully', response);
+      this.productForm.reset();
+    });
+  } else {
+    alert("Please fill all fields and select an image.");
+  }
   }
 
   loadCategories() {
@@ -56,5 +79,25 @@ export class AddProduct {
       console.log('Categories loaded:', this.categories());
     });
   }
+
+  onFileSelected(event: any) {
+  const file = event.target.files[0];
+
+  if (!file) return;
+
+  // Validate type
+  if (file.type !== 'image/png' && file.type !== 'image/jpeg') {
+    alert('Only PNG and JPEG images are allowed.');
+    return;
+  }
+
+  this.selectedFile = file;
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    this.imagePreview = reader.result;
+  };
+  reader.readAsDataURL(file);
+}
 
 }

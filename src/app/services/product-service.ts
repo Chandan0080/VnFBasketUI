@@ -11,14 +11,13 @@ export class ProductService {
   private http = inject(HttpClient);
   private token: string | null = sessionStorage.getItem('token');
 
-  addProducts(product: Product): Observable<Product>{
-    const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${this.token}` };
-    return this.http.post<Product>(this.apiUrl + '/addProduct', product, { headers });
+  addProducts(productformData: FormData): Observable<Product>{
+    const headers = { 'Authorization': `Bearer ${this.token}` };
+    return this.http.post<Product>(this.apiUrl + '/addProduct', productformData, { headers });
   }
 
   getAllProducts(): Observable<Product[]> {
-    const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${this.token}` };
-    return this.http.get<Product[]>(this.apiUrl + '/getAllProducts', { headers });
+    return this.http.get<Product[]>(this.apiUrl + '/getAllProducts');
   }
   
 }
