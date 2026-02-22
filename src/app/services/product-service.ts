@@ -9,11 +9,9 @@ import { Observable } from 'rxjs';
 export class ProductService {
   public apiUrl: string = 'http://localhost:8080/vnfbasket';
   private http = inject(HttpClient);
-  private token: string | null = sessionStorage.getItem('token');
 
   addProducts(productformData: FormData): Observable<Product>{
-    const headers = { 'Authorization': `Bearer ${this.token}` };
-    return this.http.post<Product>(this.apiUrl + '/addProduct', productformData, { headers });
+    return this.http.post<Product>(this.apiUrl + '/addProduct', productformData);
   }
 
   getAllProducts(): Observable<Product[]> {

@@ -2,7 +2,7 @@ export interface Product {
     productId?: number;
     productName?: string;
     productDescription?: string;
-    productImage?: string;
+    productImageUrl?: string;
     productPrice?: number;
     stockQuantity?: number;
     categoryId?: number;
