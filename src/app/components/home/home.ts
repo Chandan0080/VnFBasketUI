@@ -57,4 +57,13 @@ export class Home {
       this.getAllProducts();
     }
   }
+
+
+
+  onProductDeleted(productId: number) {
+  
+  this.products.update(products =>
+    products.filter(p => p.productId !== productId)
+  );
+}
 }

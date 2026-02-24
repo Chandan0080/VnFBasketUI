@@ -1,20 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProductService } from '../../services/product-service';
 import { Category } from '../../models/category.model';
 import { CategoryService } from '../../services/category-service';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatOption } from '@angular/material/autocomplete';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-product',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, ToastrModule],
   templateUrl: './add-product.html',
   styleUrl: './add-product.css',
 })
@@ -23,6 +17,7 @@ export class AddProduct {
   categories  = signal<Category[]>([]);
   selectedFile!: File;
   imagePreview: string | ArrayBuffer | null = null;
+  toastr = inject(ToastrService);
 
   constructor(
     private fb: FormBuilder,
@@ -65,6 +60,7 @@ export class AddProduct {
     formData.append('productImage', this.selectedFile);
 
     this.productService.addProducts(formData).subscribe(response => {
+      this.toastr.success('Product added successfully!');
       console.log('Product added successfully', response);
       this.productForm.reset();
     });

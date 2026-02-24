@@ -49,6 +49,8 @@
   <div class="quick-links">
     <a routerLink="/category/Fruit">Exotic Fruits</a>
     <a routerLink="/category/Vegetable">Fresh Vegetables</a>
-    <a routerLink="/add-product">Add Product</a>
+    @if(role === 'ADMIN'){
+      <a routerLink="/add-product">Add Product</a>
+    }
   </div>
 </div>

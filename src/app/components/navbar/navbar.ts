@@ -12,6 +12,7 @@ import { AuthService } from '../../services/auth-service.service';
 export class Navbar {
 
   isLoggedIn: boolean = false;
+  role: string | null = null;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -20,7 +21,11 @@ export class Navbar {
     this.authService.isLoggedIn$.subscribe(status => {
       this.isLoggedIn = status;
     });
-    console.log('Navbar initialized. Current login status:', this.isLoggedIn);
+
+    this.authService.role$.subscribe(role => {
+      this.role = role;
+    });
+    
   }
 
 

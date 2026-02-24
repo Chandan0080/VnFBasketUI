@@ -7,11 +7,13 @@ import { BehaviorSubject, Observable } from "rxjs";
 })
 export class AuthService {
      private token: string | null = null;
-   //   private isLoggedIn: boolean = false;
+  
    private isLoggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
-
      // Observable that components will subscribe to
    isLoggedIn$ = this.isLoggedInSubject.asObservable();
+
+   private roleSubject = new BehaviorSubject<string | null>(sessionStorage.getItem('role'));
+   role$ = this.roleSubject.asObservable();
 
    constructor(private http: HttpClient){}
 
@@ -41,6 +43,7 @@ export class AuthService {
 
      setRole(role: any){
         sessionStorage.setItem('role', role);
+        this.roleSubject.next(role);
      }
 
      get Role(){
@@ -79,6 +82,7 @@ export class AuthService {
         sessionStorage.removeItem('email');
         this.token = null;
         this.isLoggedInSubject.next(false);
+        this.roleSubject.next(null);
      }
 
      checkEmailExists(email: string): Observable<boolean> {
