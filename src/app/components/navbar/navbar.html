@@ -40,15 +40,17 @@
   <div class="dropdown">
     <button class="dropbtn">Shop by Category ▾</button>
     <div class="dropdown-content">
-      <a routerLink="/fruits">Fruits</a>
-      <a routerLink="/vegetables">Vegetables</a>
+      <a routerLink="/category/Fruit">Fruits</a>
+      <a routerLink="/category/Vegetable">Vegetables</a>
     </div>
   </div>
 
   <!-- Quick Links -->
   <div class="quick-links">
-    <a routerLink="/exotic-fruits">Exotic Fruits</a>
-    <a routerLink="/fresh-vegetables">Fresh Vegetables</a>
-    <a routerLink="/add-product">Add Product</a>
+    <a routerLink="/category/Fruit">Exotic Fruits</a>
+    <a routerLink="/category/Vegetable">Fresh Vegetables</a>
+    @if(role === 'ADMIN'){
+      <a routerLink="/add-product">Add Product</a>
+    }
   </div>
 </div>

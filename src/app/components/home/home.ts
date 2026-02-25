@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ProductCard } from '../product-card/product-card';
 import { Product } from '../../models/product.model';
 import { ProductService } from '../../services/product-service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -12,11 +13,17 @@ import { ProductService } from '../../services/product-service';
 })
 export class Home {
   products = signal<Product[]>([]);
+  categoryName!: string;
 
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit() {
-    this.getAllProducts();
+    
+    this.getcategoryNameFromRoute();
+    this.loadProducts();
   }
 
   getAllProducts() {
@@ -24,11 +31,39 @@ export class Home {
       this.products.set(data);
       console.log('Products loaded:', this.products());
     });
-    
   }
-}
+
+  getProductByCatrgoryName() {
+    this.productService.getProductsByCategory(this.categoryName).subscribe((data) => {
+      this.products.set(data);
+      console.log(`Products loaded for category ${this.categoryName}:`, this.products());
+    });
+  }
+
+  getcategoryNameFromRoute() {
+    this.route.paramMap.subscribe((params) => {
+      this.categoryName = params.get('categoryName')!;
+      this.getProductByCatrgoryName();
+      console.log('Category from route:', this.categoryName);
+    });
+  }
 
 
 
+  loadProducts() {
+    if (this.categoryName) {
+      this.getProductByCatrgoryName();
+    } else {
+      this.getAllProducts();
+    }
+  }
+
+
+
+  onProductDeleted(productId: number) {
   
-
+  this.products.update(products =>
+    products.filter(p => p.productId !== productId)
+  );
+}
+}
