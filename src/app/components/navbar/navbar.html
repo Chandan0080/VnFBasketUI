@@ -16,22 +16,41 @@
       </div>
     </div>
   } @else {
-    <div class="auth">
-      <button (click)="logout()">Logout</button>
-    </div>
-    <div class="icons">
+  <div class="icons">
 
-      <!-- Profile Icon -->
-      <div class="icon profile" routerLink="/profile">
+    <!-- Account Icon -->
+    <div class="account-wrapper">
+      <div class="icon profile" (click)="toggleAccountMenu($event)">
         <span class="material-icons">person</span>
       </div>
 
-      <!-- Cart Icon -->
-      <div class="icon cart" routerLink="/cart" title="Shopping Cart">
-        <span class="material-icons">shopping_basket</span>
-      </div>
+      <!-- Account Dropdown -->
+      @if (isAccountOpen) {
+        <div class="account-dropdown">
+          <ul>
+            <li routerLink="/profile">My Account</li>
+            <li routerLink="/orders">My Orders</li>
+            <li routerLink="/cart">
+              My Basket
+              <span class="badge red">0</span>
+            </li>
+            <li>Saved Payment Methods
+              <span class="badge green">₹0</span>
+            </li>
+            <li routerLink="/contact">Contact Us</li>
+            <li class="logout-item" (click)="logout()">Logout</li>
+          </ul>
+        </div>
+      }
     </div>
-  }
+
+    <!-- Cart Icon -->
+    <div class="icon cart" routerLink="/cart" title="Shopping Cart">
+      <span class="material-icons">shopping_basket</span>
+    </div>
+
+  </div>
+}
 </nav>
 
 <!-- Category Row -->
