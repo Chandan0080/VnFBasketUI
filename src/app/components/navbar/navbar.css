@@ -178,5 +178,80 @@ mat-dialog-container {
   overflow: hidden;
 }
 
+/* Account Wrapper */
+.account-wrapper {
+  position: relative;
+}
+
+/* Dropdown */
+.account-dropdown {
+  position: absolute;
+  top: 55px;
+  right: 0;
+  width: 240px;
+  background: #1f1f1f;
+  border-radius: 10px;
+  padding: 8px 0;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.account-dropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.account-dropdown li {
+  padding: 12px 18px;
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.2s ease;
+}
+
+.account-dropdown li:hover {
+  background-color: #2b2b2b;
+}
+
+/* Logout Separator */
+.logout-item {
+  border-top: 1px solid #333;
+  margin-top: 5px;
+  padding-top: 12px;
+}
+
+/* Badges */
+.badge {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 20px;
+}
+
+.badge.red {
+  background: #ff4d4f;
+  color: white;
+}
+
+.badge.green {
+  background: #84c225;
+  color: black;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 

@@ -1,6 +1,13 @@
 <div class="product-card">
   <div class="product-image-container">
     <img [src]="product.productImageUrl" [alt]="product.productName" class="product-image" />
+
+    @if(role === 'ADMIN'){
+    <div class="action-icons">
+      <i class="fa-solid fa-pen edit-icon" (click)="editProduct($event)"></i>
+      <i class="fa-solid fa-trash delete-icon" (click)="deleteProduct($event)"></i>
+    </div>
+    }
   </div>
 
   <div class="product-details">

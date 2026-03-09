@@ -9,12 +9,8 @@
     @for(items of products(); track items.productId){
       <app-product-card 
         [product]="items"
+        (productDeleted)="onProductDeleted($event)"
       ></app-product-card>
     }
-
-    <!-- <app-product-card 
-      *ngFor="let product of products" 
-      [product]="product"
-    ></app-product-card> -->
   </div>
 </div>
