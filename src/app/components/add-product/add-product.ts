@@ -38,12 +38,6 @@ export class AddProduct {
   }
 
   saveProduct() {
-    // if (this.productForm.valid) {
-    //   this.productService.addProducts(this.productForm.value).subscribe((response) => {
-    //     console.log('Product added successfully', response);
-    //     this.productForm.reset();
-    //   });
-    // }
 
     if (this.productForm.valid && this.selectedFile) {
 
