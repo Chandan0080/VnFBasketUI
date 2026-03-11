@@ -7,7 +7,7 @@ import { Category } from '../models/category.model';
   providedIn: 'root',
 })
 export class CategoryService {
-  public apiUrl: string = 'http://localhost:8080/vnfbasket';
+  private apiUrl: string = 'http://localhost:8080/vnfbasket';
   private http = inject(HttpClient);
   
   getAllCategories(): Observable<Category[]> {    

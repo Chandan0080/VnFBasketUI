@@ -21,7 +21,7 @@ export class AuthService {
     return !!sessionStorage.getItem('token');
    }
 
-     public apiUrl: string = 'http://localhost:8080/vnfbasket';
+     private apiUrl: string = 'http://localhost:8080/vnfbasket';
 
      login(details: any): Observable<any> {
       // const headers = { 'Content-Type': 'application/json' };
