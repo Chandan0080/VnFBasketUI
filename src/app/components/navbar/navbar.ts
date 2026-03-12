@@ -31,6 +31,7 @@ export class Navbar {
 
   logout() {
     this.authService.logout();
+    this.router.navigate(['/']);
   }
 
   toggleAccountMenu(event: Event) {
