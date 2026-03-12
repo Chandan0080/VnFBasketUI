@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ProductService {
-  public apiUrl: string = 'http://localhost:8080/vnfbasket';
+  private apiUrl: string = 'http://localhost:8080/vnfbasket';
   private http = inject(HttpClient);
 
   addProducts(productformData: FormData): Observable<Product>{
