@@ -4,6 +4,7 @@ import { ProductCard } from '../product-card/product-card';
 import { Product } from '../../models/product.model';
 import { ProductService } from '../../services/product-service';
 import { ActivatedRoute } from '@angular/router';
+import { timeout } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -13,18 +14,27 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class Home {
   products = signal<Product[]>([]);
-  categoryName!: string;
+  SearchedProduct = signal<String>('');
 
+
+  categoryName!: string;
+  
   constructor(
     private productService: ProductService,
     private route: ActivatedRoute,
   ) {}
+  
 
   ngOnInit() {
-    
+
     this.getcategoryNameFromRoute();
+    
     this.loadProducts();
+    this.getProductByName();
+    
   }
+
+  
 
   getAllProducts() {
     this.productService.getAllProducts().subscribe((data) => {
@@ -48,6 +58,25 @@ export class Home {
     });
   }
 
+  getSearchedProductName(){
+    this.productService.searchText$.subscribe((text) => {
+      this.SearchedProduct.set(text);
+      
+    });
+  }
+
+
+  getProductByName(){
+    this.productService.searchText$.subscribe((text) => {
+      if (text) {
+        this.productService.getProductByName(text).subscribe((data) => {
+          this.products.set([data]);
+          console.log(`Products loaded for search "${text}":`, this.products());
+        });} else {
+          this.getAllProducts();
+        }
+    })
+  }
 
 
   loadProducts() {
