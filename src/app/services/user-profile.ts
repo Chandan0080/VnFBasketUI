@@ -38,9 +38,20 @@ export class UserService {
   }
 
   deleteAddress(addressId: number):Observable<void> {
-    return this.http.delete<void>(this.apiUrl + '/deleteAddress/' + addressId);
+    return this.http.delete<void>(`${this.apiUrl}/deleteAddress/${addressId}`);
   }
 
+  updateUserProfile(updatedUser: User): Observable<User>{
+    return this.http.put<User>(this.apiUrl + '/updateUserProfile', updatedUser);
+  }
+
+  addAddress(newAddress: Address): Observable<Address> {
+    return this.http.post<Address>(this.apiUrl + '/addAddress', newAddress);
+  }
+
+  updateAddress(updatedAddress: Address): Observable<Address> {
+    return this.http.put<Address>(this.apiUrl + '/updateAddress', updatedAddress);
+  }
 
 
 }

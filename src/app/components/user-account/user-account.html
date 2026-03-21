@@ -1,82 +1,89 @@
 <div class="account-page">
-
-  <!-- PROFILE CONTENT ONLY -->
-
+  <!-- HEADER -->
   <div class="profile-header">
     <h2>Personal Details</h2>
-    <button class="edit-btn" (click)="editProfile()">EDIT</button>
+    @if (!isEditMode()) {
+    <button mat-raised-button color="primary" (click)="editProfile()">
+      Edit
+    </button>
+    }
   </div>
 
-  @if (!isEditMode && userService.userProfile() && defaultAddress()) {
+  <!-- VIEW MODE -->
+  @if (!isEditMode() && userService.userProfile()) {
   <div class="profile-view">
 
     <div class="profile-left">
-      <h3>{{ userService.userProfile()?.firstName }} {{ userService.userProfile()?.lastName }}</h3>
+      <h3>
+        {{ userService.userProfile()?.firstName }}
+        {{ userService.userProfile()?.lastName }}
+      </h3>
+
       <p>
         <mat-icon>mail</mat-icon>
         {{ userService.userProfile()?.email }}
       </p>
+
       <p>
         <mat-icon>phone</mat-icon>
         {{ userService.userProfile()?.phoneNumber }}
       </p>
     </div>
 
-    <div class="divider"></div>
+    @if (defaultAddress()) {
+    <mat-divider vertical></mat-divider>
 
     <div class="profile-right">
       <h4><b>Primary delivery address</b></h4>
-      <p><strong>{{ defaultAddress()?.address }}</strong></p>
-      <p><strong>{{ defaultAddress()?.street }}, {{ defaultAddress()?.city }} - {{ defaultAddress()?.pinCode}}</strong>
+      <p>{{ defaultAddress()?.address }}</p>
+      <p>
+        {{ defaultAddress()?.street }},
+        {{ defaultAddress()?.city }} -
+        {{ defaultAddress()?.pinCode }}
       </p>
-      <p><strong>{{ defaultAddress()?.state }}</strong></p>
+      <p>{{ defaultAddress()?.state }}</p>
     </div>
+    }
 
   </div>
   }
 
-  @if (isEditMode) {
-  <form [formGroup]="profileForm" class="edit-form">
-    ...
-  </form>
-  }
-
   <!-- EDIT MODE -->
-  @if (isEditMode) {
-  <form [formGroup]="profileForm" class="edit-form">
+  @if (isEditMode()) {
+  <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
 
-    <div class="form-field">
-      <label>First Name: </label>
-      <input type="text" formControlName="FirstName">
-      <mat-icon>edit</mat-icon>
-    </div>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="FirstName">
+    </mat-form-field>
 
-    <div class="form-field">
-      <label>Last Name: </label>
-      <input type="text" formControlName="Surname">
-      <mat-icon>edit</mat-icon>
-    </div>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="Surname">
+    </mat-form-field>
 
-    <div class="form-field">
-      <label>Mobile Number: </label>
-      <input type="text" formControlName="Mobile">
-      <mat-icon>edit</mat-icon>
-    </div>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Mobile</mat-label>
+      <input matInput formControlName="Mobile">
+    </mat-form-field>
 
-    <div class="form-field">
-      <label>Email: </label>
-      <input type="email" formControlName="Email">
-      <mat-icon>edit</mat-icon>
-    </div>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="Email">
+    </mat-form-field>
 
-    <div class="checkbox">
-      <input type="checkbox">
-      <span>Send me mails on promotions, offers and services</span>
-    </div>
+    <mat-checkbox>
+      Send me mails on promotions, offers and services
+    </mat-checkbox>
 
     <div class="form-actions">
-      <button type="button" class="cancel-btn" (click)="cancelEdit()">Cancel</button>
-      <button type="submit" class="save-btn">Save</button>
+      <button mat-button type="button" (click)="cancelEdit()">
+        Cancel
+      </button>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="profileForm.pristine || profileForm.invalid">
+        Save
+      </button>
     </div>
 
   </form>
