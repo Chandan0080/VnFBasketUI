@@ -4,6 +4,7 @@ import { Product } from '../../models/product.model';
 import { AuthService } from '../../services/auth-service.service';
 import { ProductService } from '../../services/product-service';
 import { ToastrService } from 'ngx-toastr';
+import { CartService } from '../../services/cart.service';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class ProductCard {
   @Output() productDeleted = new EventEmitter<number>();
   toastr = inject(ToastrService);
 
-  constructor(private authService: AuthService, private productService: ProductService) {}
+  constructor(private authService: AuthService, private productService: ProductService, private cartService: CartService) { }
 
   ngOnInit(): void {
     this.authService.role$.subscribe(role => {
@@ -28,30 +29,36 @@ export class ProductCard {
   }
 
   addToCart() {
-    console.log('Added to cart:', this.product.productName);
-    // Backend API call will be added here
+
+    this.cartService
+      .addToCart(this.product.productId, 1)
+      .subscribe({
+        next: () => console.log("Added to cart"),
+        error: (err) => console.error(err)
+      });
+
   }
 
   editProduct(event: Event) {
-  event.stopPropagation();
-  console.log('Edit clicked');
-}
-
-deleteProduct(event: Event) {
-  event.stopPropagation();
-  
-  const confirmDelete = confirm('Are you sure you want to delete this product?');
-  if (confirmDelete) {
-    this.productService.deleteProductById(this.product.productId).subscribe({
-      next: () => {
-        this.toastr.error('Product deleted successfully!');
-        this.productDeleted.emit(this.product.productId);
-      },
-      error: (err) => {
-        console.error('Delete failed', err);
-      }
-    });
+    event.stopPropagation();
+    console.log('Edit clicked');
   }
-}
+
+  deleteProduct(event: Event) {
+    event.stopPropagation();
+
+    const confirmDelete = confirm('Are you sure you want to delete this product?');
+    if (confirmDelete) {
+      this.productService.deleteProductById(this.product.productId).subscribe({
+        next: () => {
+          this.toastr.error('Product deleted successfully!');
+          this.productDeleted.emit(this.product.productId);
+        },
+        error: (err) => {
+          console.error('Delete failed', err);
+        }
+      });
+    }
+  }
 
 }

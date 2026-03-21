@@ -2,20 +2,23 @@ import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth-service.service';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-navbar',
   imports: [CommonModule, RouterLink],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
+  
 })
 export class Navbar {
 
   isLoggedIn: boolean = false;
   role: string | null = null;
   isAccountOpen = false;
+  cartCount:number = 0;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private cartService: CartService) {}
 
   ngOnInit(): void {
     // 🔥 Subscribe to login state
@@ -25,6 +28,10 @@ export class Navbar {
 
     this.authService.role$.subscribe(role => {
       this.role = role;
+    });
+
+    this.cartService.getCart().subscribe((items:any)=>{
+    this.cartCount = items.length;
     });
     
   }

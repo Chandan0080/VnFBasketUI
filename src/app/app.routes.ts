@@ -6,6 +6,8 @@ import { AddProduct } from './components/add-product/add-product';
 import { UserProfile } from './components/user-account/user-account';
 import { UserAddress } from './components/address/address';
 import { MyAccount } from './components/my-account/my-account';
+import { CartComponent } from './components/cart/cart';
+
 
 export const routes: Routes = [
   { path: '', component: Home},
@@ -13,6 +15,7 @@ export const routes: Routes = [
   { path: 'registration', component: Registration },
   { path: 'add-product', component: AddProduct },
   { path: 'category/:categoryName', component: Home },
+  { path: 'cart', component: CartComponent },
   {
   path: 'account',
   component: MyAccount,
