@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   const token = sessionStorage.getItem('token');
+
   if(token){
     const modifiedReq = req.clone({
       setHeaders: {
@@ -12,5 +13,6 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
     });
     return next(modifiedReq);
   }
+  
   return next(req);
 };

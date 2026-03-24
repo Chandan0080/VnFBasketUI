@@ -29,19 +29,17 @@ export class ProductCard {
   }
 
   addToCart() {
-
     this.cartService
       .addToCart(this.product.productId, 1)
       .subscribe({
-        next: () => console.log("Added to cart"),
-        error: (err) => console.error(err)
+        next: () => {
+           this.cartService.refreshCart();
+        }
       });
-
   }
 
   editProduct(event: Event) {
     event.stopPropagation();
-    console.log('Edit clicked');
   }
 
   deleteProduct(event: Event) {

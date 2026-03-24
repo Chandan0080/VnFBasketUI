@@ -1,19 +1,64 @@
-<div *ngFor="let item of cartItems" class="cart-card">
 
-  <div class="cart-info">
+<h2 class="title" *ngIf="cartItems.length > 0">
+  🧺 Your Basket({{cartItems.length}} items)
+</h2>
 
-    <h3>{{item.productName}}</h3>
+<!-- EMPTY STATE -->
+<div *ngIf="cartItems.length === 0" class="empty-cart">
+  <img src="/empty-cart.png" alt="Empty Cart" class="empty-img" />
 
-    <p>₹ {{item.price}} × {{item.quantity}}</p>
+  <h2>Your cart feels lonely 🛒</h2>
+  <p>Add some fresh items and make it happy!</p>
+
+  <button (click)="goHome()" class="shop-btn">
+    🛍️ Start Shopping
+  </button>
+  
+</div>
+
+<!-- CART ITEMS -->
+<div *ngIf="cartItems.length > 0">
+
+  <div *ngFor="let item of cartItems; trackBy: trackById" class="cart-card">
+
+    <div class="cart-left">
+      <img [src]="item.productImageUrl" />
+    </div>
+
+    <div class="cart-center">
+      <h3>{{item.productName}}</h3>
+      <p class="price">₹{{item.price}}</p>
+
+      <div class="actions">
+        <span (click)="removeItem(item.productId)">Delete</span>
+        <span>Save for later</span>
+      </div>
+    </div>
+
+    <div class="cart-right">
+
+      <div class="qty-box">
+        <button (click)="decrease(item)">−</button>
+
+        <span class="qty-number" [class.animate]="item.animate">
+          {{item.quantity}}
+        </span>
+
+        <button 
+          (click)="increase(item)" 
+          [disabled]="item.quantity >= item.availableQuantity">
+          +
+        </button>
+      </div>
+
+      <div class="total">₹{{item.totalPrice}}</div>
+
+    </div>
 
   </div>
 
-  <div class="cart-actions">
+  <hr>
 
-    <p>Total: ₹ {{item.totalPrice}}</p>
-
-    <button (click)="removeItem(item.productId)">Remove</button>
-
-  </div>
+  <h2 class="total-amount">Total Amount: ₹{{totalAmount}}</h2>
 
 </div>

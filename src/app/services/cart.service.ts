@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 import { CartItem } from '../models/cart-item.model';
 
 @Injectable({
@@ -9,37 +10,51 @@ export class CartService {
 
   private baseUrl = "http://localhost:8080/vnfbasket";
 
-  constructor(private http: HttpClient) {}
+  private cartSubject = new BehaviorSubject<CartItem[]>([]);
+  cart$ = this.cartSubject.asObservable();
+  
+ 
 
-  addToCart(productId:number, quantity:number){
+  constructor(private http: HttpClient) {
+    this.refreshCart();
+  }
 
-  return this.http.post(
-    `${this.baseUrl}/addToCart`,
-    { productId, quantity },
-    { responseType: 'text' }
-  );
+  refreshCart() {
+  this.getCart().subscribe((data: any) => {
 
+    const items: CartItem[] = data.items.map((item: any) => ({
+      ...item,
+      availableQuantity: item.availableQuantity 
+    }));
+
+    this.cartSubject.next(items);
+  });
 }
 
   getCart(){
-  return this.http.get<CartItem[]>(`${this.baseUrl}/getCartItems`);
-}
-
-  removeFromCart(productId:number){
-
-    return this.http.delete(`${this.baseUrl}/removeFromCart`,{
-      body:{productId:productId}
-    });
-
+    return this.http.get<any>(`${this.baseUrl}/getCartItems`);
   }
 
-  updateCart(productId:number, quantity:number){
+  addToCart(productId:number, quantity:number){
+    return this.http.post(
+      `${this.baseUrl}/addToCart`,
+      { productId, quantity },
+      { responseType: 'text' }
+    );
+  }
 
-    return this.http.put(`${this.baseUrl}/updateCartItem`,{
-      productId:productId,
-      quantity:quantity
-    });
+  removeFromCart(productId:number){
+    return this.http.delete(
+      `${this.baseUrl}/removeFromCart`,
+      { body:{ productId } }
+    );
+  }
 
+  updateQuantity(productId:number, quantity:number){
+    return this.http.put(
+      `${this.baseUrl}/updateCartItem`,
+      { productId, quantity }
+    );
   }
 
 }

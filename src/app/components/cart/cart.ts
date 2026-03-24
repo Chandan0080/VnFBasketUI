@@ -1,41 +1,94 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { CartItem } from '../../models/cart-item.model';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-cart',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './cart.html'
+  templateUrl: './cart.html',
+  styleUrl: './cart.css'
 })
 export class CartComponent implements OnInit {
 
   cartItems: CartItem[] = [];
 
-  constructor(private cartService: CartService) { }
 
- ngOnInit(){
+  constructor(private cartService: CartService, private cdr: ChangeDetectorRef, private router: Router) { }
 
-  this.cartService
-      .getCart()
-      .subscribe((data:any)=>{
-        this.cartItems = data.items;
+  goHome() {
+    this.router.navigate(['/']);
+  }
+  totalAmount = 0;
+
+  triggerAnimation(item: any) {
+    item.animate = true;
+
+    setTimeout(() => {
+      item.animate = false;
+    }, 200);
+  }
+
+  ngOnInit() {
+    this.cartService.cart$.subscribe(items => {
+      this.cartItems = items;
+      this.calculateTotal();
+    });
+    this.cartService.refreshCart();
+  }
+
+  increase(item: CartItem) {
+    this.triggerAnimation(item);
+    if (item.quantity >= item.availableQuantity) {
+      return;
+    }
+
+    this.cartService
+      .updateQuantity(item.productId, item.quantity + 1)
+      .subscribe(() => {
+        this.cartService.refreshCart();
       });
+  }
 
-}
-  removeItem(productId:number){
+  decrease(item: any) {
+    this.triggerAnimation(item);
+    if (item.quantity === 1) {
+      this.cartService
+        .removeFromCart(item.productId)
+        .subscribe(() => {
+          this.cartService.refreshCart();
+        });
+    } else {
+      this.cartService
+        .updateQuantity(item.productId, item.quantity - 1)
+        .subscribe(() => {
+          this.cartService.refreshCart();
+        });
+    }
+  }
 
-  this.cartService
+  removeItem(productId: number) {
+    this.cartService
       .removeFromCart(productId)
-      .subscribe(()=>{
-
-        this.cartItems = this.cartItems.filter(
-          item => item.productId !== productId
-        );
-
+      .subscribe(() => {
+        this.cartService.refreshCart();
+        this.cdr.detectChanges();
       });
+  }
 
-}
+  trackById(index: number, item: any) {
+    return item.productId;
+  }
+
+  calculateTotal() {
+    this.totalAmount = this.cartItems.reduce((sum, item) => sum + item.totalPrice, 0);
+    this.cdr.detectChanges();
+  }
+
+  
 
 }
