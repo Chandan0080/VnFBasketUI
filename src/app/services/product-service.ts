@@ -32,7 +32,15 @@ export class ProductService {
     return this.http.get<Product>(this.apiUrl + '/getProductByProductName/' + productName);
   }
 
+  getProductById(productId: number): Observable<Product> {
+    return this.http.get<Product>(this.apiUrl + '/getProductsById/' + productId);
+  }
+
   deleteProductById(productId: number): Observable<void> {
     return this.http.delete<void>(this.apiUrl+'/deleteProduct/'+productId);
   }
+
+  updateProduct(formData: FormData) {
+  return this.http.put(this.apiUrl+'/updateProduct', formData);
+}
 }

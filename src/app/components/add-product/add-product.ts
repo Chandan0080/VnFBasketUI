@@ -5,6 +5,7 @@ import { ProductService } from '../../services/product-service';
 import { Category } from '../../models/category.model';
 import { CategoryService } from '../../services/category-service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-product',
@@ -18,11 +19,15 @@ export class AddProduct {
   selectedFile!: File;
   imagePreview: string | ArrayBuffer | null = null;
   toastr = inject(ToastrService);
+  productId!: number;
+  isEditMode = false;
 
   constructor(
     private fb: FormBuilder,
     private productService: ProductService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.productForm = this.fb.group({
       productName: ['', [Validators.required]],
@@ -35,33 +40,65 @@ export class AddProduct {
 
   ngOnInit() {
     this.loadCategories();
+
+    this.route.paramMap.subscribe(params => {
+    const id = params.get('id');
+
+    if (id) {
+      this.productId = +id;
+      this.isEditMode = true;
+      this.loadProductById();
+    }
+  });
   }
+
+ 
+
 
   saveProduct() {
 
-    if (this.productForm.valid && this.selectedFile) {
+  if (this.productForm.invalid) {
+    alert("Please fill all fields.");
+    return;
+  }
 
-    const formData = new FormData();
+  const formData = new FormData();
 
-    // Append product fields
-    formData.append('productName', this.productForm.get('productName')?.value);
-    formData.append('productPrice', this.productForm.get('productPrice')?.value);
-    formData.append('categoryId', this.productForm.get('categoryId')?.value);
-    formData.append('productDescription', this.productForm.get('productDescription')?.value);
-    formData.append('stockQuantity', this.productForm.get('stockQuantity')?.value);
+  // VERY IMPORTANT
+  if (this.isEditMode) {
+    formData.append('productId', this.productId.toString());
+  }
 
-    // Append file
+  formData.append('productName', this.productForm.get('productName')?.value);
+  formData.append('productPrice', this.productForm.get('productPrice')?.value);
+  formData.append('categoryId', this.productForm.get('categoryId')?.value);
+  formData.append('productDescription', this.productForm.get('productDescription')?.value);
+  formData.append('stockQuantity', this.productForm.get('stockQuantity')?.value);
+
+  if (this.selectedFile) {
     formData.append('productImage', this.selectedFile);
+  }
 
-    this.productService.addProducts(formData).subscribe(response => {
-      this.toastr.success('Product added successfully!');
-      console.log('Product added successfully', response);
-      this.productForm.reset();
+  if (this.isEditMode) {
+
+    this.productService.updateProduct(formData).subscribe(() => {
+      this.toastr.success('Product updated successfully!');
+      this.router.navigate(['/']);
     });
+
   } else {
-    alert("Please fill all fields and select an image.");
+
+    if (!this.selectedFile) {
+      alert("Please select an image.");
+      return;
+    }
+
+    this.productService.addProducts(formData).subscribe(() => {
+      this.toastr.success('Product added successfully!');
+      this.router.navigate(['/']);
+    });
   }
-  }
+}
 
   loadCategories() {
     this.categoryService.getAllCategories().subscribe((data) => {
@@ -88,6 +125,27 @@ export class AddProduct {
     this.imagePreview = reader.result;
   };
   reader.readAsDataURL(file);
+}
+
+loadProductById() {
+  this.productService.getProductById(this.productId).subscribe(product => {
+
+        console.log('FULL PRODUCT:', product);
+    console.log('product.categoryId:', product.categoryId, typeof product.categoryId);
+    console.log('Categories list:', this.categories());
+
+    this.productForm.patchValue({
+      productName: product.productName,
+      productPrice: product.productPrice,
+      categoryId: product.categoryId,
+      productDescription: product.productDescription,
+      stockQuantity: product.stockQuantity
+    });
+    console.log('Form value after patch:', this.productForm.value);
+
+    this.imagePreview = product.productImageUrl ?? null;
+  });
+
 }
 
 }
