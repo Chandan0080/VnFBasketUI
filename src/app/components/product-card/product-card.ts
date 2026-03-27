@@ -4,6 +4,7 @@ import { Product } from '../../models/product.model';
 import { AuthService } from '../../services/auth-service.service';
 import { ProductService } from '../../services/product-service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class ProductCard {
   @Output() productDeleted = new EventEmitter<number>();
   toastr = inject(ToastrService);
 
-  constructor(private authService: AuthService, private productService: ProductService) {}
+  constructor(private authService: AuthService, private productService: ProductService, private router: Router) {}
 
   ngOnInit(): void {
     this.authService.role$.subscribe(role => {
@@ -35,6 +36,8 @@ export class ProductCard {
   editProduct(event: Event) {
   event.stopPropagation();
   console.log('Edit clicked');
+
+  this.router.navigate(['/edit-product', this.product.productId]);
 }
 
 deleteProduct(event: Event) {
@@ -53,5 +56,7 @@ deleteProduct(event: Event) {
     });
   }
 }
+
+
 
 }

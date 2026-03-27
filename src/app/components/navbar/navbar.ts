@@ -1,11 +1,15 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth-service.service';
+import { FormsModule } from '@angular/forms';
+import { ProductService } from '../../services/product-service';
+import { P } from '@angular/cdk/keycodes';
+import { Product } from '../../models/product.model';
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
@@ -14,8 +18,10 @@ export class Navbar {
   isLoggedIn: boolean = false;
   role: string | null = null;
   isAccountOpen = false;
+  searchText: string = '';
+  
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private productService: ProductService) {}
 
   ngOnInit(): void {
     // 🔥 Subscribe to login state
@@ -26,6 +32,8 @@ export class Navbar {
     this.authService.role$.subscribe(role => {
       this.role = role;
     });
+
+  
     
   }
 
@@ -43,4 +51,10 @@ export class Navbar {
 closeMenu() {
   this.isAccountOpen = false;
 }
+
+  searchProduct() {
+    this.productService.setSearchText(this.searchText);
+  }
+
+
 }

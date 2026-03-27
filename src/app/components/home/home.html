@@ -4,6 +4,12 @@
     <p>Get your daily needs delivered fresh to your doorstep</p>
   </div>
 
+  @if(products().length === 0) {
+    <div class="no-products">
+      <div class="loader"></div>
+    </div>
+  } @else { 
+
   <div class="products-grid">
 
     @for(items of products(); track items.productId){
@@ -13,4 +19,7 @@
       ></app-product-card>
     }
   </div>
+}
 </div>
+
+

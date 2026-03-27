@@ -13,6 +13,7 @@ export const routes: Routes = [
   { path: 'registration', component: Registration },
   { path: 'add-product', component: AddProduct },
   { path: 'category/:categoryName', component: Home },
+  {path: 'edit-product/:id',component: AddProduct},
   {
   path: 'account',
   component: MyAccount,
