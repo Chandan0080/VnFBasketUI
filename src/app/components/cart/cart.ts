@@ -15,6 +15,10 @@ import { Router } from '@angular/router';
 })
 export class CartComponent implements OnInit {
 
+  placeOrder() {
+    throw new Error('Method not implemented.');
+  }
+
   cartItems: CartItem[] = [];
 
 
@@ -89,6 +93,6 @@ export class CartComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  
+
 
 }
