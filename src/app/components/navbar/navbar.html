@@ -9,12 +9,12 @@
 
   <!-- Login & Cart -->
   @if (!isLoggedIn) {
-    <div class="auth-section">
-      <button routerLink="/login" class="login-btn">Login / Sign Up</button>
-      <div class="icon cart" routerLink="/login" title="Shopping Cart">
-        <span class="material-icons">shopping_basket</span>
-      </div>
+  <div class="auth-section">
+    <button routerLink="/login" class="login-btn">Login / Sign Up</button>
+    <div class="icon cart" routerLink="/login" title="Shopping Cart">
+      <span class="material-icons">shopping_basket</span>
     </div>
+  </div>
   } @else {
   <div class="icons">
 
@@ -26,31 +26,37 @@
 
       <!-- Account Dropdown -->
       @if (isAccountOpen) {
-        <div class="account-dropdown">
-          <ul>
-            <li routerLink="/account">My Account</li>
-            <li routerLink="/orders">My Orders</li>
-            <li routerLink="/cart">
-              My Basket
-              <span class="badge red">0</span>
-            </li>
-            <li>Saved Payment Methods
-              <span class="badge green">₹0</span>
-            </li>
-            <li routerLink="/contact">Contact Us</li>
-            <li class="logout-item" (click)="logout()">Logout</li>
-          </ul>
-        </div>
+      <div class="account-dropdown">
+        <ul>
+          <li routerLink="/account">My Account</li>
+          <li routerLink="/orders">My Orders</li>
+          <li routerLink="/cart">
+            My Basket
+            <span class="badge red">{{cartCount}}</span>
+          </li>
+          <li>Saved Payment Methods
+            <span class="badge green">₹0</span>
+          </li>
+          <li routerLink="/contact">Contact Us</li>
+          <li class="logout-item" (click)="logout()">Logout</li>
+        </ul>
+      </div>
       }
     </div>
 
     <!-- Cart Icon -->
     <div class="icon cart" routerLink="/cart" title="Shopping Cart">
+
       <span class="material-icons">shopping_basket</span>
+
+      @if(cartCount > 0){
+      <span class="badge red">{{cartCount}}</span>
+      }
+
     </div>
 
   </div>
-}
+  }
 </nav>
 
 <!-- Category Row -->
@@ -69,7 +75,7 @@
     <a routerLink="/category/Fruit">Exotic Fruits</a>
     <a routerLink="/category/Vegetable">Fresh Vegetables</a>
     @if(role === 'ADMIN'){
-      <a routerLink="/add-product">Add Product</a>
+    <a routerLink="/add-product">Add Product</a>
     }
   </div>
 </div>
