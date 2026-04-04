@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth-service.service';
 import { ProductService } from '../../services/product-service';
 import { ToastrService } from 'ngx-toastr';
 import { CartService } from '../../services/cart.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class ProductCard {
   @Output() productDeleted = new EventEmitter<number>();
   toastr = inject(ToastrService);
 
-  constructor(private authService: AuthService, private productService: ProductService, private cartService: CartService) { }
+  constructor(private authService: AuthService, private productService: ProductService, private cartService: CartService, private router: Router) { }
 
   ngOnInit(): void {
     this.authService.role$.subscribe(role => {
@@ -39,8 +40,11 @@ export class ProductCard {
   }
 
   editProduct(event: Event) {
-    event.stopPropagation();
-  }
+  event.stopPropagation();
+  console.log('Edit clicked');
+
+  this.router.navigate(['/edit-product', this.product.productId]);
+}
 
   deleteProduct(event: Event) {
     event.stopPropagation();
@@ -58,5 +62,7 @@ export class ProductCard {
       });
     }
   }
+
+
 
 }
